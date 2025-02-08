@@ -1,5 +1,6 @@
 package com.codemento.board.entity;
 
+import com.codemento.board.enums.PostCategory;
 import com.codemento.member.entity.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,8 +18,10 @@ public class Post {
 
     private String title;
     private String content;
-
     private String isDeleted;
+
+    @Enumerated(EnumType.STRING)
+    private PostCategory category;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
