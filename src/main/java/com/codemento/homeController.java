@@ -1,4 +1,4 @@
-package com.codemento.board.controller;
+package com.codemento;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

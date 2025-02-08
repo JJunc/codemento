@@ -3,6 +3,7 @@ package com.codemento.board.entity;
 import com.codemento.board.enums.PostCategory;
 import com.codemento.member.entity.User;
 import jakarta.persistence.*;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,7 +22,7 @@ public class Post {
     private String isDeleted;
 
     @Enumerated(EnumType.STRING)
-    private PostCategory category;
+    private PostCategory postCategory;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
@@ -37,4 +38,13 @@ public class Post {
     @UpdateTimestamp
     @Column(nullable = false)  // 수정일은 반드시 존재
     private LocalDateTime updatedDate;
+
+    @Builder
+    public Post(String title, String content, User author,PostCategory postCategory, LocalDateTime createdDate) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+        this.postCategory = postCategory;
+        this.createdDate = createdDate;
+    }
 }

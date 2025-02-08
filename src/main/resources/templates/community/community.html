@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <div class="container-xxl mt-5">
+        <div class="row link-info">
+            <div class="col-1">
+                <a href="">취업</a>
+            </div>
+            <div class="col-1">
+                <a href="">자유</a>
+            </div>
+            <div class="col-1">
+                <a href="">백엔드</a>
+            </div>
+            <div class="col-2">
+                <a href="">프론트엔드</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table border-top">
+                <colgroup>
+                    <col width="10%">
+                    <col width="10%">
+                    <col width="*%">
+                    <col width="5%">
+                    <col width="10%">
+                    <col width="5%">
+                </colgroup>
+                <tr class="text-center">
+                    <th>번호</th>
+                    <th>말머리</th>
+                    <th>제목</th>
+                    <th>글쓴이</th>
+                    <th>작성일</th>
+                    <th>추천</th>
+                </tr>
+                <tr>
+                    <td class="text-center">1</td>
+                    <td class="text-center">공지</td>
+                    <td>
+                        <a href="" class="text">
+                            공지사항
+                        </a>
+                    </td>
+                    <td class="text-center">운영자</td>
+                    <td class="text-center">2025.02.08</td>
+                    <td class="text-center">1</td>
+                </tr>
+            </table>
+        </div>
+        <div class="row justify-content-center">
+
+        </div>
+        <div class="row">
+            <div class="col-11"></div>
+            <div class="col">
+                <a href="community/create" class="btn btn-primary">글쓰기</a>
+            </div>
+        </div>
+        <div class="row">
+            <!-- 페이징 버튼 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <!-- 이전 페이지 버튼 -->
+                    <li class="page-item">
+                        <a class="page-link">이전</a>
+                    </li>
+                    <!-- 페이지 번호 표시 -->
+                    <li class="page-item"
+                    >
+                        <a class="page-link"></a>
+                    </li>
+                    <!-- 다음 페이지 버튼 -->
+                    <li class="page-item">
+                        <a class="page-link">다음</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</th:block>
+</html>
