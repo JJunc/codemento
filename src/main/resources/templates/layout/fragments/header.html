@@ -27,7 +27,8 @@
                 <div class="d-flex align-items-center">
                     <th:block th:if="${session.userId != null}">
                         <span class="me-3 fw-semibold text-dark" th:text="|${session.userId}님|"></span>
-                        <a href="/user/logout" class="btn btn-outline-success rounded-pill px-4">로그아웃</a>
+                        <a href="/user/logout" class="btn btn-outline-success rounded-pill px-4">로그아웃 </a>
+                        <a href="/user/mypage" class="btn btn-outline-success rounded-pill px-4">마이페이지</a>
                     </th:block>
                     <th:block th:if="${session.userId == null}">
                         <a href="/user/login" class="btn btn-outline-success rounded-pill px-4 me-2">로그인</a>

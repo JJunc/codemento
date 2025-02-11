@@ -37,6 +37,8 @@ public class Post {
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
+    private int views;
+
     @ManyToOne
     @JoinColumn(name = "post_author_id")
     private User author;
@@ -52,12 +54,14 @@ public class Post {
 
 
     @Builder
-    public Post(String title, String content, User author,PostCategory postCategory, LocalDateTime createdDate) {
+    public Post(Long id, String title, String content, User author,PostCategory postCategory, int views, LocalDateTime createdDate) {
+        this.id=id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.postCategory = postCategory;
         this.createdDate = createdDate;
+        this.views = views;
     }
 
     public Post() {

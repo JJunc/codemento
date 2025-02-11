@@ -2,78 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
 <th:block layout:fragment="content">
-    <div class="container-xxl mt-5">
-        <div class="row link-info">
-            <div class="col-1">
-                <a href="">취업</a>
-            </div>
-            <div class="col-1">
-                <a href="">자유</a>
-            </div>
-            <div class="col-1">
-                <a href="">백엔드</a>
-            </div>
-            <div class="col-2">
-                <a href="">프론트엔드</a>
-            </div>
-        </div>
-        <div class="row">
-            <table class="table border-top">
-                <colgroup>
-                    <col width="10%">
-                    <col width="10%">
-                    <col width="*%">
-                    <col width="5%">
-                    <col width="10%">
-                    <col width="5%">
-                </colgroup>
-                <tr class="text-center">
-                    <th>번호</th>
-                    <th>말머리</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>작성일</th>
-                    <th>추천</th>
-                </tr>
-                <tr>
-                    <td class="text-center">1</td>
-                    <td class="text-center">공지</td>
-                    <td>
-                        <a href="" class="text">
-                            공지사항
-                        </a>
-                    </td>
-                    <td class="text-center">운영자</td>
-                    <td class="text-center">2025.02.08</td>
-                    <td class="text-center">1</td>
-                </tr>
-            </table>
-        </div>
-        <div class="row justify-content-center">
+    <div class="container-xxl mt-5 text-center">
+        <h2>커뮤니티</h2>
+        <ul class="nav nav-pills justify-content-center mb-3">
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${category == 'ALL' ? 'active' : ''}" href="/community" style="color: black;">전체</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${category == 'JOB' ? 'active' : ''}" href="/community?category=JOB" style="color: black;">취업</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${category == 'BACKEND' ? 'active' : ''}" href="/community?category=BACKEND" style="color: black;">백엔드</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${category == 'FRONTEND' ? 'active' : ''}" href="/community?category=FRONTEND" style="color: black;">프론트엔드</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:classappend="${category == 'FREE' ? 'active' : ''}" href="/community?category=FREE" style="color: black;">자유</a>
+            </li>
+        </ul>
+        <table class="table text-center">
+            <colgroup>
+                <col width="10%">
+                <col width="10%">
+                <col width="*">
+                <col width="10%">
+                <col width="10%">
+                <col width="10%">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>말머리</th>
+                <th>제목</th>
+                <th>글쓴이</th>
+                <th>작성일</th>
+                <th>조회수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="post, stat : ${posts}">
+                <td th:text="${stat.index + 1}"></td>
+                <td th:text="${post.postCategory.value}"></td>
+                <td><a th:href="@{/community/{id}(id=${post.id})}" th:text="${post.title}" class="text-start"></a></td>
+                <td th:text="${post.author.nickname}"></td>
+                <td th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${post.views}"></td>
+            </tr>
+            </tbody>
+        </table>
 
+        <div class="d-flex justify-content-end mb-3">
+            <a th:if="${session.userId != null}" href="/community/create" class="btn btn-primary">글쓰기</a>
         </div>
-        <div class="row">
-            <div class="col-11"></div>
-            <div class="col">
-                <a href="community/create" class="btn btn-primary">글쓰기</a>
-            </div>
-        </div>
-        <div class="row">
-            <!-- 페이징 버튼 -->
-            <nav aria-label="Page navigation">
+
+        <div class="row justify-content-center">
+            <nav aria-label="Page navigation" th:if="${not isEmpty}">
                 <ul class="pagination justify-content-center">
                     <!-- 이전 페이지 버튼 -->
-                    <li class="page-item">
-                        <a class="page-link">이전</a>
+                    <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:attr="href=${'/community?category=' + category + '&page=' + (currentPage > 1 ? currentPage - 1 : 1)}"
+                           th:text="'이전'"></a>
                     </li>
+
                     <!-- 페이지 번호 표시 -->
-                    <li class="page-item"
-                    >
-                        <a class="page-link"></a>
+                    <li class="page-item" th:each="i : ${#numbers.sequence(1, totalPages)}"
+                        th:classappend="${currentPage == i} ? 'active' : ''">
+                        <a class="page-link" th:href="@{/community?category={category}&page={i}}" th:text="${i}"></a>
                     </li>
+
                     <!-- 다음 페이지 버튼 -->
-                    <li class="page-item">
-                        <a class="page-link">다음</a>
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled' : ''">
+                        <a class="page-link"
+                           th:attr="href=${'/community?category=' + category + '&page=' + (currentPage < totalPages ? currentPage + 1 : totalPages)}"
+                           th:text="'다음'"></a>
                     </li>
                 </ul>
             </nav>

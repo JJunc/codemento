@@ -10,6 +10,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
+    // 모든 게시글을 페이징 처리하기
+    Page<Post> findAll(Pageable pageable);
+
     // 제목으로 게시글 조회 (페이징 처리)
     Page<Post> findByTitle(String title, Pageable pageable);
 
@@ -18,4 +21,5 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     // 카테고리별 게시글 조회 (페이징 처리)
     Page<Post> findByPostCategory(PostCategory category, Pageable pageable);
+
 }
