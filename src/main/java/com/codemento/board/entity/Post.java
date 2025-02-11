@@ -1,9 +1,11 @@
 package com.codemento.board.entity;
 
 import com.codemento.board.enums.PostCategory;
-import com.codemento.member.entity.User;
+import com.codemento.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,14 +13,22 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Table(name= "posts")
+@Getter @Setter
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @Column(nullable = false)
     private String title;
+
+    @Column(nullable = false)
+    @Lob
     private String content;
+
+    @Column(nullable = false)
     private String isDeleted;
 
     @Enumerated(EnumType.STRING)
@@ -39,6 +49,8 @@ public class Post {
     @Column(nullable = false)  // 수정일은 반드시 존재
     private LocalDateTime updatedDate;
 
+
+
     @Builder
     public Post(String title, String content, User author,PostCategory postCategory, LocalDateTime createdDate) {
         this.title = title;
@@ -46,5 +58,9 @@ public class Post {
         this.author = author;
         this.postCategory = postCategory;
         this.createdDate = createdDate;
+    }
+
+    public Post() {
+
     }
 }

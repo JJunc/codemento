@@ -2,7 +2,7 @@ package com.codemento.board.dto;
 
 import com.codemento.board.entity.Post;
 import com.codemento.board.enums.PostCategory;
-import com.codemento.member.entity.User;
+import com.codemento.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +36,7 @@ public class PostSaveForm {
                 .title(title)
                 .content(content)
                 .postCategory(category)
+                .createdDate(createdDate)
                 .build();
     }
 }

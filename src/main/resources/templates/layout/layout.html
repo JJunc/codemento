@@ -14,6 +14,11 @@
             crossorigin="anonymous"></script>
     <!-- Ckeditor -->
     <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+
+    <script
+            src="https://code.jquery.com/jquery-3.7.1.js"
+            integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+            crossorigin="anonymous"></script>
     <style>
         /* 푸터 스타일 */
         footer ul {
@@ -24,21 +29,20 @@
 
         /* 게시글 등록 Ckeditor*/
         .ck-editor__editable {
-            height: 400px !important;  /* 높이를 강제 설정 */
+            height: 400px !important; /* 높이를 강제 설정 */
         }
 
         #content {
-            height: 400px;  /* textarea 높이 설정 */
+            height: 400px; /* textarea 높이 설정 */
         }
-
 
 
     </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
-<th:block th:replace="/layout/fragments/header :: headerLayout"></th:block>
+<th:block th:replace="~{/layout/fragments/header :: headerLayout}"></th:block>
 <th:block layout:fragment="content">
 </th:block>
-<th:block th:replace="/layout/fragments/footer :: footerLayout"></th:block>
+<th:block th:replace="~{/layout/fragments/footer :: footerLayout}"></th:block>
 </body>
 </html>

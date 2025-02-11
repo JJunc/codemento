@@ -1,19 +1,23 @@
 package com.codemento.board.entity;
 
-import com.codemento.member.entity.User;
+import com.codemento.user.entity.User;
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity
+@NoArgsConstructor
+@Table(name="comments")
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @Column(nullable = false)
     private String isDeleted;
 
     @ManyToOne
@@ -24,6 +28,8 @@ public class Comment {
     @JoinColumn(name = "comment_author_id")
     private User author;
 
+    @Column(nullable = false)
+    @Lob
     private String content;
 
     @ManyToOne

@@ -1,20 +1,42 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headerLayout">
-    <nav class="nav justify-content-center border-bottom border-secondary-subtle p-3 mb-5">
-            <a class="nav-link active fw-bold text-start" aria-current="page" href="/" style="text-decoration: none">
-                코드멘토
-            </a>
-            <a class="nav-link" href="/community">커뮤니티</a>
-            <a class="nav-link" href="#">멘토링</a>
+    <nav class="navbar navbar-expand-lg bg-white shadow-sm p-3">
+        <div class="container d-flex justify-content-center align-items-center">
+            <!-- 로고 (좌측) -->
+            <a class="navbar-brand fw-bold text-success me-4" href="/" style="font-size: 1.5rem;">코드멘토</a>
 
-            <!-- 검색창 -->
-            <form class="d-flex">
-                <input class="form-control" type="search" placeholder="검색어 입력" aria-label="Search">
-                <button class="btn btn-primary" type="submit">검색</button>
-            </form>
+            <!-- 네비게이션 + 검색창 + 로그인 버튼 중앙 정렬 -->
+            <div class="d-flex flex-grow-1 justify-content-center align-items-center">
+                <!-- 네비게이션 메뉴 -->
+                <ul class="navbar-nav me-3">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="/community">커뮤니티</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold text-dark" href="#">멘토링</a>
+                    </li>
+                </ul>
 
-            <a class="nav-link" href="#">계정</a>
+                <!-- 검색창 -->
+                <form class="d-flex mx-3" style="width: 300px;">
+                    <input class="form-control border rounded-pill px-3" type="search" placeholder="배우고 싶은 기술을 검색하세요" aria-label="Search">
+                </form>
+
+                <!-- 로그인 / 로그아웃 -->
+                <div class="d-flex align-items-center">
+                    <th:block th:if="${session.userId != null}">
+                        <span class="me-3 fw-semibold text-dark" th:text="|${session.userId}님|"></span>
+                        <a href="/user/logout" class="btn btn-outline-success rounded-pill px-4">로그아웃</a>
+                    </th:block>
+                    <th:block th:if="${session.userId == null}">
+                        <a href="/user/login" class="btn btn-outline-success rounded-pill px-4 me-2">로그인</a>
+                        <a href="/user/signIn" class="btn btn-success text-white rounded-pill px-4">회원가입</a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
     </nav>
+
 </th:block>
 </html>

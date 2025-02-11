@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+    <div class="container-xxl p-3">
+        <h1 class="text-center">회원가입</h1>
+        <form id="signUpForm" th:action="@{/user/signIn}" th:object="${form}" method="post" class="p-3 m-3">
+            <div class="row form-group p-3">
+                <label for="userId">아이디</label>
+                <input type="text" class="form-control" id="userId" th:field="*{id}"
+                       placeholder="아이디를 입력하세요" required>
+                <div id="userIdError" class="text-danger"></div>
+            </div>
+            <div class="row form-group p-3">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" th:field="*{password}"
+                       placeholder="비밀번호를 입력하세요" required>
+            </div>
+            <div class="row form-group p-3">
+                <label for="nickname">닉네임</label>
+                <input type="text" class="form-control" id="nickname" th:field="*{nickname}"
+                       placeholder="닉네임을 입력하세요" required>
+                <div id="nicknameError" class="text-danger"></div>
+                <div class="text-danger" th:errors="*{nickname}"></div>
+            </div>
+            <div class="row form-group p-3">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="이메일을 입력하세요">
+                <div id="emailError" class="text-danger"></div>
+            </div>
+            <div class="row form-group p-3">
+                <label for="phoneNumber">휴대폰 번호</label>
+                <input type="text" class="form-control" id="phoneNumber" th:field="*{phoneNumber}"
+                       placeholder="휴대폰 번호를 입력하세요">
+            </div>
+            <div class="row form-group p-3">
+                <label for="githubProfile">깃허브 링크</label>
+                <input type="text" class="form-control" id="githubProfile" th:field="*{githubProfile}"
+                       placeholder="깃허브 URL을 입력하세요">
+            </div>
+            <div class="row form-group p-3">
+                <label for="linkedInProfile">링크드인 링크</label>
+                <input type="text" class="form-control" id="linkedInProfile" th:field="*{linkedInProfile}"
+                       placeholder="링크드인 URL를 입력하세요">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3">회원가입</button>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let nicknameValid = false;
+            let emailValid = false;
+            let userIdValid = false;
+
+            function checkAvailability(inputId, errorId, url, paramName, callback) {
+                let inputElement = document.getElementById(inputId);
+                let errorElement = document.getElementById(errorId);
+                let value = inputElement.value;
+
+                fetch(`${url}?${paramName}=${encodeURIComponent(value)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.exists) {
+                            errorElement.textContent = "이미 사용 중입니다.";
+                            errorElement.style.display = "block";
+                            callback(false);
+                        } else {
+                            errorElement.textContent = "";
+                            errorElement.style.display = "none";
+                            callback(true);
+                        }
+                    })
+                    .catch(error => console.error("AJAX 요청 실패:", error));
+            }
+
+            document.getElementById("nickname").addEventListener("blur", function() {
+                checkAvailability("nickname", "nicknameError", "/user/checkNickname", "nickname", function(valid) {
+                    nicknameValid = valid;
+                });
+            });
+
+            document.getElementById("email").addEventListener("blur", function() {
+                checkAvailability("email", "emailError", "/user/checkEmail", "email", function(valid) {
+                    emailValid = valid;
+                });
+            });
+
+            document.getElementById("userId").addEventListener("blur", function() {
+                checkAvailability("userId", "userIdError", "/user/checkUserId", "userId", function(valid) {
+                    userIdValid = valid;
+                });
+            });
+
+            document.getElementById("signUpForm").addEventListener("submit", function(event) {
+                if (!nicknameValid || !emailValid || !userIdValid) {
+                    event.preventDefault();
+                    alert("중복된 값이 있습니다. 확인 후 다시 시도해주세요.");
+                }
+            });
+        });
+
+
+
+    </script>
+</th:block>
+</html>

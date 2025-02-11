@@ -4,6 +4,8 @@ import com.codemento.board.dto.PostSaveForm;
 import com.codemento.board.entity.Post;
 import com.codemento.board.enums.PostCategory;
 import com.codemento.board.repository.PostRepository;
+import com.codemento.user.entity.User;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +19,12 @@ public class PostService {
 
     private final PostRepository postRepository;
 
-    public void save(PostSaveForm postSaveForm) {
-        postRepository.save(postSaveForm.toEntity());
+    public void save(PostSaveForm form, HttpSession session) {
+        User loginUser = User.builder()
+                .id((String) session.getAttribute("userId"))
+                .build();
+        form.setAuthor(loginUser);
+        postRepository.save(form.toEntity());
     }
 
     public Page<Post> getPostsByTitle(String title, int page, int size) {
