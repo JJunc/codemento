@@ -2,7 +2,6 @@ package com.codemento.user.controller;
 
 import com.codemento.user.dto.UserLoginForm;
 import com.codemento.user.dto.UserSignInForm;
-import com.codemento.user.entity.User;
 import com.codemento.user.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")

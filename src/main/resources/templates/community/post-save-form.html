@@ -4,7 +4,7 @@
 <th:block layout:fragment="content">
     <div class="container-xxl mt-5">
         <h2>게시글 작성</h2>
-        <form th:action="@{/community/create}" th:object="${form}" method="post">
+        <form th:action="@{/community/post/create}" th:object="${form}" method="post">
 
             <!-- 제목 입력 -->
             <div class="mt-3 mb-3">
@@ -15,9 +15,11 @@
             <!-- 카테고리 선택 -->
             <div class="mb-3">
                 <label for="category" class="form-label">카테고리</label>
-                <select th:field="*{category}" class="form-select" id="category" required>
+                <select th:field="*{postCategory}" class="form-select" id="category" name="category" required>
                     <option th:each="cat : ${T(com.codemento.board.enums.PostCategory).values()}"
-                            th:value="${cat}" th:text="${cat.getDescription()}">
+                            th:if="${cat.name() != 'ALL'}"
+                            th:value="${cat.name()}"
+                            th:text="${cat.getValue()}">
                     </option>
                 </select>
             </div>

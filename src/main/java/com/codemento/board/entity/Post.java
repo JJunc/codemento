@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -29,6 +30,7 @@ public class Post {
     private String content;
 
     @Column(nullable = false)
+    @ColumnDefault("'N'")
     private String isDeleted;
 
     @Enumerated(EnumType.STRING)
@@ -54,13 +56,15 @@ public class Post {
 
 
     @Builder
-    public Post(Long id, String title, String content, User author,PostCategory postCategory, int views, LocalDateTime createdDate) {
+    public Post(Long id, String title, String content, User author,PostCategory postCategory, int views, List<Comment> comments,LocalDateTime createdDate, LocalDateTime updatedDate) {
         this.id=id;
         this.title = title;
         this.content = content;
         this.author = author;
+        this.comments = comments;
         this.postCategory = postCategory;
         this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
         this.views = views;
     }
 

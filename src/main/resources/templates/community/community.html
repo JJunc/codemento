@@ -41,11 +41,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post, stat : ${posts}">
+            <tr th:each="post, stat : ${posts}" th:if="${post.isDeleted == 'N'}">
                 <td th:text="${stat.index + 1}"></td>
                 <td th:text="${post.postCategory.value}"></td>
-                <td><a th:href="@{/community/{id}(id=${post.id})}" th:text="${post.title}" class="text-start"></a></td>
-                <td th:text="${post.author.nickname}"></td>
+                <td><a th:href="@{/community/{postId}(postId=${post.id})}" th:text="${post.title}" class="text-start"></a></td>
+                <td th:text="${post.authorNickname}"></td>
                 <td th:text="${#temporals.format(post.createdDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${post.views}"></td>
             </tr>
@@ -53,7 +53,7 @@
         </table>
 
         <div class="d-flex justify-content-end mb-3">
-            <a th:if="${session.userId != null}" href="/community/create" class="btn btn-primary">글쓰기</a>
+            <a th:if="${session.userId != null}" href="/community/post/create" class="btn btn-primary">글쓰기</a>
         </div>
 
         <div class="row justify-content-center">

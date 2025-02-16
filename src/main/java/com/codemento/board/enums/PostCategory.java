@@ -9,7 +9,7 @@ public enum PostCategory {
     JOB("취업"),
     FREE("자유"),
     BACKEND("백엔드"),
-    FRONTEND("프론트"),
+    FRONTEND("프론트엔드"),
     NOTICE("공지사항");
 
     private final String value;
