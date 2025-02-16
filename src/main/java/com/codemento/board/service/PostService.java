@@ -49,6 +49,14 @@ public class PostService {
         post.setIsDeleted("Y");
     }
 
+    @Transactional
+    public void visit(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없습니다."));
+
+        post.setViews(post.getViews() + 1);
+    }
+
     public PostDetailDto findById(Long id) {
         Optional<Post> post = postRepository.findById(id);
         return postMapper.toPostDetailDto(post.get());

@@ -39,6 +39,8 @@ public class Post {
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
+    @Column(nullable = false)
+    @ColumnDefault("0")
     private int views;
 
     @ManyToOne

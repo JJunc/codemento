@@ -75,6 +75,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public String postDetail(@PathVariable(name = "postId") Long postId, Model model) {
         PostDetailDto post = postService.findById(postId);
+        postService.visit(postId);
         List<CommentListDto> commentList = commentService.findAllCommentsByPostId(postId);
         model.addAttribute("post", post);
         model.addAttribute("comments", commentList);
